@@ -461,11 +461,14 @@
     border: 1px solid rgba(255,255,255,.07);
     border-radius: 4px;
     padding: 28px;
+    overflow: hidden;
   }
   .chart-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: .7rem; color: var(--gold); letter-spacing: .1em;
     margin-bottom: 20px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
   }
   .bar-chart {
     display: flex;
@@ -473,6 +476,9 @@
     gap: 4px;
     height: 100px;
     border-bottom: 1px solid rgba(255,255,255,.15);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 6px;
   }
   .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
   .bar {
@@ -488,10 +494,36 @@
     color: var(--cream); white-space: nowrap;
     background: rgba(18,14,6,.9); padding: 2px 5px; border-radius: 2px;
   }
+  .bar.show-val::after {
+    content: attr(data-val);
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace; font-size: .65rem;
+    color: var(--cream); white-space: nowrap;
+    background: rgba(18,14,6,.9); padding: 2px 5px; border-radius: 2px;
+  }
+  .bar.active {
+    outline: 1px solid var(--gold);
+    outline-offset: 2px;
+  }
   .bar.neg { border-radius: 0 0 2px 2px; }
   .bar-yr {
     font-family: 'IBM Plex Mono', monospace;
     font-size: .55rem; color: rgba(240,234,214,.4);
+  }
+  .chart-value {
+    margin-top: 12px;
+    min-height: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem;
+    color: rgba(240,234,214,.75);
+    letter-spacing: .03em;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .bar:hover::after,
+    .bar.show-val::after {
+      content: none;
+    }
   }
 
   /* ══ ACTUALIDAD ══ */
@@ -578,6 +610,58 @@
     transition: opacity .6s, transform .6s;
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media(max-width:900px){
+    .hero {
+      min-height: 760px;
+    }
+    .map-corner {
+      top: 18px;
+      right: 16px;
+      width: calc(100% - 32px);
+      max-width: 320px;
+      height: 180px;
+    }
+    .region-badge {
+      top: 210px;
+      right: 16px;
+      width: calc(100% - 32px);
+      max-width: 320px;
+      padding: 12px 14px;
+      font-size: .68rem;
+      line-height: 1.6;
+    }
+  }
+
+  @media(max-width:700px){
+    section { padding: 70px 20px; }
+    .section-divider {
+      margin: 0 20px;
+      max-width: calc(1100px - 40px);
+    }
+    .hero-content {
+      padding: 0 20px 96px;
+    }
+    .members-tag {
+      right: 20px;
+      bottom: 44px;
+      max-width: 65%;
+      font-size: .62rem;
+      line-height: 1.5;
+    }
+    .chart-wrap {
+      padding: 18px 14px;
+    }
+    .bar-chart {
+      gap: 8px;
+    }
+    .bar-wrap {
+      min-width: 28px;
+    }
+    .bar-yr {
+      font-size: .52rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -812,8 +896,9 @@
 
   <!-- PIB chart -->
   <div class="chart-wrap reveal">
-    <div class="chart-label">VARIACIÓN ESTIMADA DEL PIB — Lituania 1990–2004 (hover para ver valor)</div>
+    <div class="chart-label">VARIACIÓN ESTIMADA DEL PIB — Lituania 1990–2004 (toca una barra para leer los valores)</div>
     <div class="bar-chart" id="barChart"></div>
+    <div class="chart-value" id="chartValue" aria-live="polite">Toca una barra para ver el valor.</div>
   </div>
 </section>
 
@@ -908,8 +993,10 @@ const bars = [
 const maxAbs = 21;
 const chartH = 100;
 const zeroRatio = maxAbs / (maxAbs + maxAbs);
+const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
 const container = document.getElementById('barChart');
+const valueBox = document.getElementById('chartValue');
 bars.forEach(b => {
   const wrap = document.createElement('div');
   wrap.className = 'bar-wrap';
@@ -922,6 +1009,19 @@ bars.forEach(b => {
   bar.style.alignSelf = b.val < 0 ? 'flex-start' : 'flex-end';
   bar.dataset.val = (b.val > 0 ? '+' : '') + b.val + '%';
 
+  if (isTouch) {
+    bar.tabIndex = 0;
+    bar.setAttribute('role', 'button');
+    bar.setAttribute('aria-label', `Año ${b.yr}, variación ${bar.dataset.val}`);
+    bar.addEventListener('click', () => {
+      container.querySelectorAll('.bar.active').forEach(el => el.classList.remove('active'));
+      bar.classList.add('active');
+      if (valueBox) {
+        valueBox.textContent = `${b.yr}: ${bar.dataset.val}`;
+      }
+    });
+  }
+
   const yr = document.createElement('div');
   yr.className = 'bar-yr';
   yr.textContent = b.yr;
@@ -930,6 +1030,15 @@ bars.forEach(b => {
   wrap.appendChild(yr);
   container.appendChild(wrap);
 });
+
+if (isTouch) {
+  container.setAttribute('aria-label', 'Grafico de barras con valores tocables');
+  if (valueBox) {
+    valueBox.textContent = 'Toca una barra para ver el valor.';
+  }
+} else if (valueBox) {
+  valueBox.textContent = 'Pasa el cursor sobre una barra para ver el valor.';
+}
 
 //  Intersection Observer for reveal 
 const obs = new IntersectionObserver((entries) => {
