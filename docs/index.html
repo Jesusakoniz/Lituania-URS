@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lituania & la URSS</title>
+
+<meta name="description" content="Presentación sobre Lituania y su historia dentro de la URSS: integración, desarrollo soviético, post-socialismo y situación económica actual.">
+<meta name="author" content="Felipe de Jesús Camacho Barrera, Alexander Vázquez Quezada">
+<meta name="keywords" content="Lituania, URSS, Guerra Fría, historia, RSS de Lituania, post-socialismo, independencia, Vilnius">
+<meta name="language" content="es">
+<meta name="created" content="2026-04-21">
+
+<meta property="og:title" content="Lituania & la URSS">
+<meta property="og:description" content="50 años bajo Moscú. Deportaciones, fábricas y silencio. Después, la independencia — y la reconstrucción desde cero.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lituania & la URSS">
+<meta name="twitter:description" content="50 años bajo Moscú. Deportaciones, fábricas y silencio. Después, la independencia — y la reconstrucción desde cero.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:    #C0242B;
+    --gold:   #D4A843;
+    --cream:  #F0EAD6;
+    --ink:    #1A1208;
+    --paper:  #F7F2E3;
+    --lt-y:   #FDB913;
+    --lt-g:   #006A44;
+    --lt-r:   #C1272D;
+    --dark:   #120E06;
+    --muted:  #7A6E5A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /*  GRAIN OVERLAY  */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    opacity: .35;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ══════════════════════════════════════════
+     HERO
+  ══════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Vilnius_Old_Town_panorama_2017.jpg/1600px-Vilnius_Old_Town_panorama_2017.jpg')
+      center 40% / cover no-repeat;
+    filter: saturate(.7) brightness(.55);
+    transform: scale(1.04);
+    animation: slowZoom 20s ease-out forwards;
+  }
+  @keyframes slowZoom { to { transform: scale(1); } }
+
+  .hero-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(18,14,6,.1) 0%,
+      rgba(18,14,6,.3) 50%,
+      rgba(18,14,6,.92) 100%
+    );
+  }
+
+  /* Lithuanian flag stripe */
+  .lt-stripe {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 7px;
+    display: flex;
+  }
+  .lt-stripe span { flex: 1; }
+  .lt-stripe span:nth-child(1) { background: var(--lt-y); }
+  .lt-stripe span:nth-child(2) { background: var(--lt-g); }
+  .lt-stripe span:nth-child(3) { background: var(--lt-r); }
+
+  /* top-right region badge */
+  .region-badge {
+    position: absolute;
+    top: 28px; right: 32px;
+    background: rgba(18,14,6,.75);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 14px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem;
+    color: var(--gold);
+    line-height: 1.7;
+    backdrop-filter: blur(8px);
+    animation: fadeSlideDown .8s .4s both;
+  }
+  .region-badge strong {
+    display: block;
+    font-size: .85rem;
+    color: var(--cream);
+    margin-bottom: 4px;
+    letter-spacing: .05em;
+  }
+
+  /* Real map embedded */
+  .map-corner {
+    position: absolute;
+    top: 28px; right: 260px;
+    width: 260px; height: 210px;
+    border: 1px solid rgba(212,168,67,.6);
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeSlideDown .8s .6s both;
+    pointer-events: all;
+    box-shadow: 0 4px 24px rgba(0,0,0,.5);
+    z-index: 10;
+  }
+  .map-corner iframe {
+    width: 100%; height: 100%;
+    border: none;
+    pointer-events: all;
+    filter: saturate(.85) brightness(.92);
+  }
+  .map-corner-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(18,14,6,.75);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem;
+    color: var(--gold);
+    text-align: center;
+    padding: 4px;
+    letter-spacing: .08em;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 60px 60px;
+    max-width: 900px;
+    animation: fadeSlideUp .9s .2s both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .78rem;
+    color: var(--gold);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: .93;
+    letter-spacing: -.02em;
+    color: var(--cream);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(240,234,214,.7);
+    max-width: 480px;
+    line-height: 1.55;
+  }
+
+  .hero-bar {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .hero-years {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: -.03em;
+  }
+
+  .nav-pills {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .nav-pills a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid rgba(240,234,214,.3);
+    border-radius: 2px;
+    transition: all .2s;
+  }
+  .nav-pills a:hover {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  /* members tag */
+  .members-tag {
+    position: absolute;
+    bottom: 60px; right: 60px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .68rem;
+    color: rgba(240,234,214,.5);
+    text-align: right;
+    line-height: 1.8;
+    animation: fadeSlideUp .9s .5s both;
+  }
+  .members-tag span { color: var(--gold); display: block; margin-bottom: 2px; font-size: .75rem; }
+
+  /*  SCROLL INDICATOR  */
+  .scroll-hint {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem; letter-spacing: .15em; color: rgba(240,234,214,.35);
+    animation: bounce 2s infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(212,168,67,.5), transparent);
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* ══════════════════════════════════════════
+     SECTIONS
+  ══════════════════════════════════════════ */
+  section {
+    position: relative;
+    padding: 90px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: .35;
+    margin: 0 60px;
+    max-width: calc(1100px - 120px);
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    opacity: .9;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 28px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .lead {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240,234,214,.8);
+    max-width: 720px;
+    margin-bottom: 40px;
+  }
+
+  /* ══ NOMBRE ══ */
+  #nombre { background: rgba(255,255,255,.015); }
+
+  .name-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .name-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(212,168,67,.2);
+    border-top: 3px solid var(--gold);
+    padding: 22px 20px;
+    border-radius: 2px;
+    transition: transform .2s, background .2s;
+  }
+  .name-card:hover { transform: translateY(-3px); background: rgba(212,168,67,.07); }
+  .name-card .year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .7rem; color: var(--gold); letter-spacing: .1em; margin-bottom: 8px;
+  }
+  .name-card .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: var(--cream); margin-bottom: 6px;
+  }
+  .name-card .desc {
+    font-size: .88rem; color: rgba(240,234,214,.6); line-height: 1.5;
+  }
+  .name-card.soviet { border-top-color: var(--red); }
+  .name-card.soviet .year { color: var(--red); }
+
+  /* ══ INTEGRACIÓN ══ */
+  #integracion { background: rgba(192,36,43,.03); }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin-top: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--red), rgba(192,36,43,.1));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity .5s, transform .5s;
+  }
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -37px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 3px rgba(192,36,43,.2);
+  }
+  .tl-year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .78rem; color: var(--red); letter-spacing: .1em; margin-bottom: 4px;
+  }
+  .tl-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; color: var(--cream); margin-bottom: 6px;
+  }
+  .tl-body {
+    font-size: .98rem; color: rgba(240,234,214,.7); line-height: 1.65; max-width: 680px;
+  }
+
+  /* ══ DESARROLLO ══ */
+  #desarrollo { }
+
+  .dev-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 36px;
+  }
+  @media(max-width:700px){ .dev-grid { grid-template-columns: 1fr; } }
+
+  .dev-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 4px;
+    padding: 28px;
+    transition: border-color .2s;
+  }
+  .dev-card:hover { border-color: rgba(212,168,67,.35); }
+  .dev-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .dev-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--gold); margin-bottom: 10px;
+  }
+  .dev-card p { font-size: .95rem; color: rgba(240,234,214,.65); line-height: 1.65; }
+
+  /* stat strip */
+  .stat-strip {
+    display: flex; flex-wrap: wrap; gap: 0;
+    margin-top: 48px;
+    border: 1px solid rgba(212,168,67,.2);
+    border-radius: 4px; overflow: hidden;
+  }
+  .stat-item {
+    flex: 1; min-width: 130px;
+    padding: 24px 20px;
+    border-right: 1px solid rgba(212,168,67,.15);
+    text-align: center;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--gold); line-height: 1;
+  }
+  .stat-lbl { font-size: .78rem; color: rgba(240,234,214,.5); margin-top: 6px; }
+
+  /* ══ POST SOCIALISMO ══ */
+  #post { background: rgba(0,106,68,.03); }
+
+  .post-cols {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 36px;
+  }
+  @media(max-width:700px){ .post-cols { grid-template-columns:1fr; } }
+
+  .post-col h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold); border-bottom: 1px solid rgba(212,168,67,.25);
+    padding-bottom: 10px; margin-bottom: 18px;
+  }
+  .post-col ul { list-style: none; }
+  .post-col li {
+    font-size: .97rem; color: rgba(240,234,214,.75);
+    line-height: 1.65; padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    padding-left: 18px; position: relative;
+  }
+  .post-col li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--gold); opacity: .6;
+  }
+
+  /* PIB chart */
+  .chart-wrap {
+    margin-top: 40px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 4px;
+    padding: 28px;
+  }
+  .chart-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .7rem; color: var(--gold); letter-spacing: .1em;
+    margin-bottom: 20px;
+  }
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 100px;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+  }
+  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bar {
+    width: 100%; border-radius: 2px 2px 0 0;
+    transition: opacity .2s;
+    cursor: default;
+    position: relative;
+  }
+  .bar:hover::after {
+    content: attr(data-val);
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace; font-size: .65rem;
+    color: var(--cream); white-space: nowrap;
+    background: rgba(18,14,6,.9); padding: 2px 5px; border-radius: 2px;
+  }
+  .bar.neg { border-radius: 0 0 2px 2px; }
+  .bar-yr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .55rem; color: rgba(240,234,214,.4);
+  }
+
+  /* ══ ACTUALIDAD ══ */
+  #actualidad { }
+
+  .kpi-row {
+    display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 48px;
+  }
+  .kpi {
+    background: rgba(255,255,255,.04);
+    border-left: 3px solid var(--gold);
+    padding: 18px 22px;
+    flex: 1; min-width: 140px;
+    border-radius: 0 4px 4px 0;
+    transition: background .2s;
+  }
+  .kpi:hover { background: rgba(212,168,67,.07); }
+  .kpi-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem; font-weight: 900; color: var(--gold); line-height: 1;
+  }
+  .kpi-lbl { font-size: .78rem; color: rgba(240,234,214,.5); margin-top: 5px; }
+
+  .sectors-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px;
+    margin-top: 8px;
+  }
+  .sector-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 4px; padding: 24px;
+    transition: all .2s;
+  }
+  .sector-card:hover { border-color: var(--gold); background: rgba(212,168,67,.05); }
+  .sector-card .sector-icon { font-size: 1.5rem; margin-bottom: 10px; }
+  .sector-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--cream); margin-bottom: 8px;
+  }
+  .sector-card p { font-size: .88rem; color: rgba(240,234,214,.6); line-height: 1.6; }
+
+  /* geo-alert */
+  .geo-alert {
+    margin-top: 40px;
+    background: rgba(192,36,43,.08);
+    border: 1px solid rgba(192,36,43,.3);
+    border-left: 4px solid var(--red);
+    border-radius: 0 4px 4px 0;
+    padding: 24px 28px;
+  }
+  .geo-alert h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .78rem; letter-spacing: .12em; color: var(--red);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .geo-alert p { font-size: .97rem; color: rgba(240,234,214,.75); line-height: 1.65; }
+
+  /* ══ FOOTER ══ */
+  footer {
+    background: rgba(255,255,255,.02);
+    border-top: 1px solid rgba(212,168,67,.15);
+    padding: 40px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+    max-width: none;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--gold);
+  }
+  .footer-members {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .7rem; color: rgba(240,234,214,.45); line-height: 1.8;
+    text-align: right;
+  }
+  .footer-members strong { color: rgba(240,234,214,.7); }
+
+  /*  ANIMATIONS  */
+  @keyframes fadeSlideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeSlideDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s, transform .6s;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="lt-stripe"><span></span><span></span><span></span></div>
+  <div class="hero-bg"></div>
+  <div class="hero-gradient"></div>
+
+  <!-- Mapa real top-right -->
+  <div class="map-corner">
+    <iframe
+      src="https://www.openstreetmap.org/export/embed.html?bbox=20.5,53.8,27.2,56.5&layer=mapnik&marker=55.1694,23.8813"
+      loading="lazy"
+      title="Mapa de Lituania"
+      allowfullscreen>
+    </iframe>
+    <div class="map-corner-label">🗺 Puedes hacer zoom · clic para explorar</div>
+  </div>
+
+  <!-- Badge región -->
+  <div class="region-badge">
+    <strong>📍 Región</strong>
+    Europa del Norte<br>
+    Estados Bálticos<br>
+    55°10′N · 23°53′E<br>
+    65 300 km²
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Historia · Guerra Fría · URSS</p>
+    <h1 class="hero-title">
+      <em>Lituania</em><br>& la URSS
+    </h1>
+    <p class="hero-sub">
+      50 años bajo Moscú. Deportaciones, fábricas y silencio.
+      Después, la independencia — y la reconstrucción desde cero.
+    </p>
+    <div class="hero-bar">
+      <span class="hero-years">1940–1990</span>
+      <nav class="nav-pills">
+        <a href="#nombre">Nombre</a>
+        <a href="#integracion">Integración</a>
+        <a href="#desarrollo">Desarrollo</a>
+        <a href="#post">Post-socialismo</a>
+        <a href="#actualidad">Actualidad</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="members-tag">
+    <span>Integrantes</span>
+    Felipe de Jesús Camacho Barrera<br>
+    Alexander Vázquez Quezada
+  </div>
+
+  <div class="scroll-hint">SCROLL</div>
+</div>
+
+<!-- ══ NOMBRE ══ -->
+<div class="section-divider"></div>
+<section id="nombre">
+  <p class="section-label reveal">Identidad Nacional</p>
+  <h2 class="section-title reveal">El nombre que <em>cambió</em><br>y el que nunca cambió</h2>
+  <p class="lead reveal">
+    Para los lituanos, el país siempre fue <em>Lietuva</em>. Pero en los papeles oficiales soviéticos ese nombre desapareció. Lo que quedó fue un título largo y frío que básicamente decía: "ya no son un país, son una pieza del mapa soviético".
+  </p>
+  <div class="name-cards">
+    <div class="name-card reveal">
+      <div class="year">1918 – 1940</div>
+      <div class="name">República de Lituania</div>
+      <div class="desc">País soberano reconocido tras la Primera Guerra Mundial. Tenían su propio gobierno, moneda y ejército. Duró poco.</div>
+    </div>
+    <div class="name-card soviet reveal">
+      <div class="year">1940 – 1941</div>
+      <div class="name">RSS de Lituania</div>
+      <div class="desc">Stalin mandó un ultimátum en junio. No hubo votación real. En semanas, Lituania "pidió" unirse a la URSS — con soldados soviéticos ya dentro del país.</div>
+    </div>
+    <div class="name-card reveal">
+      <div class="year">1941 – 1944</div>
+      <div class="name">Ostland / Generalkommissariat</div>
+      <div class="desc">Los nazis invadieron y borraron hasta el nombre soviético. Lituania pasó a ser un pedazo del "Reichskommissariat Ostland". Para los lituanos, era un ocupante cambiando a otro.</div>
+    </div>
+    <div class="name-card soviet reveal">
+      <div class="year">1944 – 1990</div>
+      <div class="name">RSS de Lituania (URSS)</div>
+      <div class="desc">Los soviéticos volvieron. Estados Unidos y Europa nunca reconocieron legalmente esta anexión — las embajadas lituanas siguieron funcionando en el extranjero durante toda la ocupación.</div>
+    </div>
+    <div class="name-card reveal">
+      <div class="year">11 mar 1990 →</div>
+      <div class="name">República de Lituania</div>
+      <div class="desc">Primera república soviética en salirse. Lo votaron en el parlamento, a pesar de que había tanques soviéticos en la ciudad. El nombre histórico volvió ese mismo día.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INTEGRACIÓN ══ -->
+<div class="section-divider"></div>
+<section id="integracion">
+  <p class="section-label reveal">Guerra Fría</p>
+  <h2 class="section-title reveal">Cómo se integró<br>a la <em>URSS</em></h2>
+  <p class="lead reveal">
+    Nadie en Lituania levantó la mano para unirse a la URSS. Lo que pasó fue una mezcla de amenazas militares, elecciones que no eran elecciones, y decretos firmados mientras había soldados soviéticos en las calles.
+  </p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">AGO 1939</div>
+      <div class="tl-title">Pacto Molotov-Ribbentrop</div>
+      <div class="tl-body">Hitler y Stalin hicieron un trato secreto: Alemania se quedaba con Polonia occidental, la URSS con los países bálticos. Lituania no fue consultada. Simplemente fue repartida en un mapa.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">JUN 1940</div>
+      <div class="tl-title">El ultimátum</div>
+      <div class="tl-body">Moscú mandó un ultimátum: abran las fronteras para tropas ilimitadas y cambien el gobierno. Si no, invasión. El gobierno lituano tenía ocho horas para responder. Aceptaron. No tenían mucha opción con el Ejército Rojo ya en la frontera.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">JUL 1940</div>
+      <div class="tl-title">Las "elecciones"</div>
+      <div class="tl-body">Se organizaron elecciones con una sola lista de candidatos. El resultado oficial: 99.19% de participación, 99.16% de votos a favor. Números que solo salen cuando alguien ya decidió el resultado antes de votar.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">3 AGO 1940</div>
+      <div class="tl-title">Adhesión formal</div>
+      <div class="tl-body">El parlamento recién "electo" pidió unirse a la URSS. El Soviet Supremo dijo que sí ese mismo día. Estados Unidos, Gran Bretaña y otros países nunca reconocieron esto — las embajadas lituanas siguieron abiertas en Washington durante 50 años.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">JUN 1941</div>
+      <div class="tl-title">La primera deportación</div>
+      <div class="tl-body">En 48 horas, más de 17,000 personas fueron sacadas de sus casas y metidas en trenes hacia Siberia. Políticos, profesores, militares, familias enteras. Muchos nunca volvieron. Fue la primera de varias operaciones similares.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DESARROLLO ══ -->
+<div class="section-divider"></div>
+<section id="desarrollo">
+  <p class="section-label reveal">1940 – 1990</p>
+  <h2 class="section-title reveal">Cómo vivió Lituania<br>bajo el <em>régimen soviético</em></h2>
+  <p class="lead reveal">
+    Cincuenta años es mucho tiempo. Hubo industrialización, sí — pero también trenes a Siberia, iglesias cerradas y un idioma que el régimen quería borrar. La vida soviética en Lituania no fue uniforme: hubo épocas más duras y épocas con algo más de aire.
+  </p>
+
+  <div class="dev-grid">
+    <div class="dev-card reveal">
+      <div class="icon">🏭</div>
+      <h3>De campo a fábrica</h3>
+      <p>En 1940 Lituania era básicamente agraria. Para los 80s ya tenía plantas de electrónica, maquinaria pesada y la planta nuclear de Ignalina — una de las más grandes del mundo en ese momento. El problema: nada de eso fue diseñado para beneficiar a los lituanos.</p>
+    </div>
+    <div class="dev-card reveal">
+      <div class="icon">🌾</div>
+      <h3>Se acabaron las granjas privadas</h3>
+      <p>Las tierras que las familias habían trabajado por generaciones fueron colectivizadas. Pasaron a llamarse <em>koljós</em> o <em>sovjós</em>. Muchos campesinos prefirieron matar su ganado antes que entregarlo. Hubo resistencia armada en los bosques hasta bien entrados los 50s.</p>
+    </div>
+    <div class="dev-card reveal">
+      <div class="icon">🏙️</div>
+      <h3>Las ciudades cambiaron de cara</h3>
+      <p>En 1940, solo el 23% vivía en ciudades. Para 1989 era el 68%. Vilnius, Kaunas y Klaipėda se llenaron de bloques de apartamentos grises idénticos. Funcionales, sí. Bonitos, no tanto.</p>
+    </div>
+    <div class="dev-card reveal">
+      <div class="icon">✝️</div>
+      <h3>La Iglesia se volvió clandestina</h3>
+      <p>El catolicismo era parte central de la identidad lituana — así que fue uno de los primeros blancos. Iglesias cerradas, sacerdotes vigilados. Desde 1972, disidentes publicaron la <em>Crónica de la Iglesia Católica</em> en secreto. Llegó a circular por todo el mundo.</p>
+    </div>
+    <div class="dev-card reveal">
+      <div class="icon">🚂</div>
+      <h3>Los trenes a Siberia</h3>
+      <p>En la operación de 1949, sacaron a más de 29,000 personas en una semana. Familias completas, sin previo aviso, metidas en vagones de carga. En total, se calcula que más de 130,000 lituanos fueron deportados o asesinados durante toda la era soviética.</p>
+    </div>
+    <div class="dev-card reveal">
+      <div class="icon">✊</div>
+      <h3>Sąjūdis — cuando la gente se hartó</h3>
+      <p>En 1988, aprovechando la <em>glasnost</em> de Gorbachov, nació el movimiento Sąjūdis. No era un partido político — era la gente. En dos años pasaron de pedir autonomía a declarar la independencia completa.</p>
+    </div>
+  </div>
+
+  <div class="stat-strip reveal">
+    <div class="stat-item">
+      <div class="stat-val">3.7M</div>
+      <div class="stat-lbl">Población en 1989</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">68%</div>
+      <div class="stat-lbl">Urbanización 1989</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">~130K</div>
+      <div class="stat-lbl">Deportados estimados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">50</div>
+      <div class="stat-lbl">Años bajo la URSS</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">1972</div>
+      <div class="stat-lbl">Inicio Crónica Católica</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ POST-SOCIALISMO ══ -->
+<div class="section-divider"></div>
+<section id="post">
+  <p class="section-label reveal">1990 – 2004</p>
+  <h2 class="section-title reveal">Después del socialismo:<br>caos, crisis y <em>reconstrucción</em></h2>
+  <p class="lead reveal">
+    Independizarse fue la parte fácil comparado con lo que vino después. La economía colapsó, los precios se dispararon y la gente que había trabajado toda su vida en fábricas soviéticas de repente se quedó sin empleo. Fue duro — pero lo superaron.
+  </p>
+
+  <div class="post-cols">
+    <div class="post-col reveal">
+      <h3>Lo que pasó políticamente</h3>
+      <ul>
+        <li>El 11 de marzo de 1990 votaron la independencia en el parlamento. Eran los primeros en hacerlo de toda la URSS. Nadie sabía bien cómo iba a reaccionar Moscú.</li>
+        <li>Moscú reaccionó cortando el gas y el petróleo durante meses. Querían que se echaran para atrás. No funcionó.</li>
+        <li>El 13 de enero de 1991, tanques soviéticos entraron a Vilnius y atacaron la Torre de TV. 14 personas murieron defendiéndola. Las imágenes dieron la vuelta al mundo.</li>
+        <li>Cuando el golpe contra Gorbachov fracasó en agosto del 91, el mundo empezó a reconocer la independencia lituana una tras otra.</li>
+        <li>En 2004 entraron a la OTAN y a la Unión Europea el mismo año. Habían tardado 14 años en recorrer ese camino desde la ocupación hasta Europa.</li>
+      </ul>
+    </div>
+    <div class="post-col reveal">
+      <h3>El desastre económico</h3>
+      <ul>
+        <li>De un día para otro, los precios se liberalizaron. La inflación en 1992 fue del 1,020%. No es un error de tipografía: mil por ciento.</li>
+        <li>El PIB cayó casi a la mitad entre 1990 y 1994. Las fábricas soviéticas simplemente no podían competir en el mercado real.</li>
+        <li>Miles de personas perdieron sus empleos cuando cerraron las plantas que Moscú había construido para su propia economía, no para la lituana.</li>
+        <li>En 1993 introdujeron el <em>litas</em>, su propia moneda. Lo anclaron al dólar como señal de que iban en serio con la estabilidad.</li>
+        <li>Hacia 1995 empezaron a remontar. La inversión extranjera llegó, el comercio con Europa creció, y para finales de los 90s ya eran otra economía.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PIB chart -->
+  <div class="chart-wrap reveal">
+    <div class="chart-label">VARIACIÓN ESTIMADA DEL PIB — Lituania 1990–2004 (hover para ver valor)</div>
+    <div class="bar-chart" id="barChart"></div>
+  </div>
+</section>
+
+<!-- ══ ACTUALIDAD ══ -->
+<div class="section-divider"></div>
+<section id="actualidad">
+  <p class="section-label reveal">Hoy</p>
+  <h2 class="section-title reveal">Lituania hoy:<br>la economía que <em>nadie esperaba</em></h2>
+  <p class="lead reveal">
+    Si en 1992 alguien te decía que Lituania iba a ser sede europea de Revolut, líder mundial en láseres de precisión e independiente energéticamente de Rusia, probablemente no te lo creías. Y sin embargo, aquí están.
+  </p>
+
+  <div class="kpi-row">
+    <div class="kpi reveal">
+      <div class="kpi-val">~$47K</div>
+      <div class="kpi-lbl">PIB per cápita (PPA, 2024)</div>
+    </div>
+    <div class="kpi reveal">
+      <div class="kpi-val">+2%</div>
+      <div class="kpi-lbl">Crecimiento PIB (2023)</div>
+    </div>
+    <div class="kpi reveal">
+      <div class="kpi-val">6.5%</div>
+      <div class="kpi-lbl">Desempleo (2024)</div>
+    </div>
+    <div class="kpi reveal">
+      <div class="kpi-val">0.879</div>
+      <div class="kpi-lbl">IDH (2023)</div>
+    </div>
+    <div class="kpi reveal">
+      <div class="kpi-val">€ Euro</div>
+      <div class="kpi-lbl">Moneda desde 2015</div>
+    </div>
+  </div>
+
+  <div class="sectors-grid">
+    <div class="sector-card reveal">
+      <div class="sector-icon">🔬</div>
+      <h4>Láseres de precisión</h4>
+      <p>Suena raro pero es real: Lituania es uno de los líderes mundiales en láseres científicos de alta precisión. Empresas como Ekspla y Light Conversion venden sus equipos a los mejores laboratorios del planeta.</p>
+    </div>
+    <div class="sector-card reveal">
+      <div class="sector-icon">💻</div>
+      <h4>Fintech post-Brexit</h4>
+      <p>Cuando el Reino Unido salió de la UE, muchas empresas financieras necesitaban base europea. Vilnius abrió los brazos. Revolut tiene su sede europea aquí. Hoy hay más de 200 licencias financieras europeas emitidas desde Lituania.</p>
+    </div>
+    <div class="sector-card reveal">
+      <div class="sector-icon">🚢</div>
+      <h4>Puerto de Klaipėda</h4>
+      <p>El único puerto lituano, y desde 2022 mucho más importante: con las sanciones a Rusia, muchos países del Báltico redescubrieron Klaipėda como alternativa. El tráfico portuario creció notablemente.</p>
+    </div>
+    <div class="sector-card reveal">
+      <div class="sector-icon">⚡</div>
+      <h4>Fuera de la red rusa</h4>
+      <p>En 2022 dijeron basta con el gas ruso — instalaron una terminal flotante de GNL en Klaipėda. Y en febrero de 2025 se desconectaron físicamente de la red eléctrica soviética BRELL. Llevaban décadas planeándolo.</p>
+    </div>
+    <div class="sector-card reveal">
+      <div class="sector-icon">🌾</div>
+      <h4>Agroexportación</h4>
+      <p>La agricultura lituana — antes colectivizada a la fuerza — hoy exporta lácteos y cereales principalmente a Alemania y Suecia. Es un sector moderno que poco tiene que ver con los koljós soviéticos.</p>
+    </div>
+    <div class="sector-card reveal">
+      <div class="sector-icon">🛡️</div>
+      <h4>Defensa seria</h4>
+      <p>Gastan cerca del 4% del PIB en defensa — uno de los porcentajes más altos de la OTAN. No es por lucirse: tienen a Rusia y Bielorrusia en la frontera, y lo que pasó en Ucrania en 2022 lo tomaron muy en serio.</p>
+    </div>
+  </div>
+
+  <div class="geo-alert reveal">
+    <h4>⚠ El Corredor de Suwalki</h4>
+    <p>Hay una franja de tierra de apenas 100 km entre Bielorrusia y el exclave ruso de Kaliningrado. Eso es el Corredor de Suwalki — y los analistas de la OTAN lo consideran el punto más vulnerable de toda la alianza. Si Rusia alguna vez quisiera cortar físicamente a los países bálticos del resto de Europa, ese sería el lugar. En 2022, Lituania restringió el tránsito de mercancías sancionadas hacia Kaliningrado. Rusia protestó. La tensión sigue ahí.</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-brand">Lituania & la URSS</div>
+  <div class="footer-members">
+    <strong>Felipe de Jesús Camacho Barrera</strong><br>
+    <strong>Alexander Vázquez Quezada</strong>
+  </div>
+</footer>
+
+<script>
+//  Bar chart 
+const bars = [
+  {yr:'1990',val:-5},{yr:'1991',val:-21},{yr:'1992',val:-21},{yr:'1993',val:-16},
+  {yr:'1994',val:-9},{yr:'1995',val:3},{yr:'1996',val:5},{yr:'1997',val:8},
+  {yr:'1998',val:5},{yr:'1999',val:-2},{yr:'2000',val:4},{yr:'2001',val:6},
+  {yr:'2002',val:7},{yr:'2003',val:10},{yr:'2004',val:7}
+];
+const maxAbs = 21;
+const chartH = 100;
+const zeroRatio = maxAbs / (maxAbs + maxAbs);
+
+const container = document.getElementById('barChart');
+bars.forEach(b => {
+  const wrap = document.createElement('div');
+  wrap.className = 'bar-wrap';
+
+  const bar = document.createElement('div');
+  bar.className = 'bar' + (b.val < 0 ? ' neg' : '');
+  const h = Math.abs(b.val) / maxAbs * (chartH * 0.85);
+  bar.style.height = h + 'px';
+  bar.style.background = b.val < 0 ? '#C0242B' : b.val < 4 ? '#D4A843' : '#006A44';
+  bar.style.alignSelf = b.val < 0 ? 'flex-start' : 'flex-end';
+  bar.dataset.val = (b.val > 0 ? '+' : '') + b.val + '%';
+
+  const yr = document.createElement('div');
+  yr.className = 'bar-yr';
+  yr.textContent = b.yr;
+
+  wrap.appendChild(bar);
+  wrap.appendChild(yr);
+  container.appendChild(wrap);
+});
+
+//  Intersection Observer for reveal 
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 0);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal, .tl-item').forEach(el => obs.observe(el));
+
+// stagger children in groups
+document.querySelectorAll('.name-cards, .dev-grid, .sectors-grid, .kpi-row, .stat-strip').forEach(parent => {
+  [...parent.children].forEach((child, i) => {
+    child.style.transitionDelay = (i * 80) + 'ms';
+  });
+});
+</script>
+</body>
+</html>
+<!-- Escrito por Johanna ! -->
